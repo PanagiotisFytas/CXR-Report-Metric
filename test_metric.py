@@ -2,9 +2,9 @@ import config
 from CXRMetric.run_eval import calc_metric
 from CXRMetric.run_eval import CompositeMetric
 
-gt_reports_files = config.GT_REPORTS
-predicted_reports_files = config.PREDICTED_REPORTS
-out_files = config.OUT_FILE
+gt_reports_files = config.GT_REPORTS_FILES
+predicted_reports_files = config.PREDICTED_REPORTS_FILES
+out_file_files = config.OUT_FILE_FILES
 use_idf = config.USE_IDF
 
 if __name__ == "__main__":
