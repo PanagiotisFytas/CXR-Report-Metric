@@ -8,5 +8,5 @@ out_file_files = config.OUT_FILE_FILES
 use_idf = config.USE_IDF
 
 if __name__ == "__main__":
-    for gt_reports, predicted_reports, out_file in zip(gt_reports_files, predicted_reports_files, out_files):
+    for gt_reports, predicted_reports, out_file in zip(gt_reports_files, predicted_reports_files, out_file_files):
         calc_metric(gt_reports, predicted_reports, out_file, use_idf)
