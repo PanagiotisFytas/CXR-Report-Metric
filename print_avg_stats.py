@@ -23,6 +23,6 @@ for i, df in enumerate(df_list):
     avg_scores.append(df.mean())
     print("\n")
 
-# create a new DataFrame to store the average scores indexed by file names
-avg_df = pd.DataFrame(avg_scores, index=OUT_FILE_FILES)
+# create a new DataFrame to store the average scores indexed by out file names
+avg_df = pd.DataFrame(avg_scores, index=OUT_FILE_NAMES)
 print(avg_df)
