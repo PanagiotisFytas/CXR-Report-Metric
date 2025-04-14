@@ -71,6 +71,10 @@ class CompositeMetric:
 
 def prep_reports(reports):
     """Preprocesses reports"""
+    ### remove prompt from predicted reports
+    for i in range(len(reports)):
+        if "system" in reports[i] and "### Instruction:" in reports[i] and "### Impression: " in reports[i]:
+            reports[i] = reports[i].split("### Impression: ")[1]
     return [list(filter(
         lambda val: val !=  "", str(elem)\
             .lower().replace(".", " .").split(" "))) for elem in reports]
@@ -166,6 +170,12 @@ def calc_metric(gt_csv, pred_csv, out_csv, use_idf): # TODO: support single metr
         .sort_values(by=[STUDY_ID_COL_NAME]).reset_index(drop=True)
     pred = pd.read_csv(pred_csv)\
         .sort_values(by=[STUDY_ID_COL_NAME]).reset_index(drop=True)
+    # from STUDY_ID_COL_NAME remove "_" (if it exists) from study_ids
+    gt[STUDY_ID_COL_NAME] = gt[STUDY_ID_COL_NAME].apply(
+        lambda x: re.sub(r"_(\d+)", r"\1", str(x)))
+    pred[STUDY_ID_COL_NAME] = pred[STUDY_ID_COL_NAME].apply(
+        lambda x: re.sub(r"_(\d+)", r"\1", str(x)))
+    # remove duplicates
 
     # Keep intersection of study IDs
     gt_study_ids = set(gt[STUDY_ID_COL_NAME])
