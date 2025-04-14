@@ -136,21 +136,21 @@ def add_radgraph_col(pred_df, entities_path, relations_path):
         scores = json.load(f)
         for study_id, (f1, _, _) in scores.items():
             try:
-                study_id_to_radgraph[(study_id)] = float(f1)
+                study_id_to_radgraph[int(study_id)] = float(f1)
             except:
                 continue
     with open(relations_path, "r") as f:
         scores = json.load(f)
         for study_id, (f1, _, _) in scores.items():
             try:
-                study_id_to_radgraph[(study_id)] += float(f1)
-                study_id_to_radgraph[(study_id)] /= float(2)
+                study_id_to_radgraph[int(study_id)] += float(f1)
+                study_id_to_radgraph[int(study_id)] /= float(2)
             except:
                 continue
     radgraph_scores = []
     count = 0
     for i, row in pred_df.iterrows():
-        radgraph_scores.append(study_id_to_radgraph[(row[STUDY_ID_COL_NAME])])
+        radgraph_scores.append(study_id_to_radgraph[int(row[STUDY_ID_COL_NAME])])
     pred_df["radgraph_combined"] = radgraph_scores
     return pred_df
 
@@ -200,6 +200,7 @@ def calc_metric(gt_csv, pred_csv, out_csv, use_idf): # TODO: support single metr
     relations_path = os.path.join(cache_path, "relations_cache.json")
     run_radgraph(cache_gt_csv, cache_pred_csv, cache_path, RADGRAPH_PATH,
                  entities_path, relations_path)
+    print(pred)
     pred = add_radgraph_col(pred, entities_path, relations_path)
 
     # compute composite metric: RadCliQ-v0
