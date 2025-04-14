@@ -10,9 +10,12 @@ OUT_FILE_FILES = [
 # Load the CSV files into DataFrames
 df_list = [pd.read_csv(file) for file in OUT_FILE_FILES]
 
+avg_scores = []
 # print the average of each column for each DataFrame
 for i, df in enumerate(df_list):
-    print(f"file: {OUT_FILE_FILES[i]}")
-    print(f"DataFrame {i + 1} average:")
-    print(df.mean())
+    avg_scores.append(df.mean())
     print("\n")
+
+# create a new DataFrame to store the average scores indexed by file names
+avg_df = pd.DataFrame(avg_scores, index=OUT_FILE_FILES)
+print(avg_df)
